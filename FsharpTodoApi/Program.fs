@@ -21,9 +21,9 @@ let main args =
     app.MapGet("/v1/systems/ping", Func<IResult>(fun () -> Results.Ok("pong")))
     |> ignore
 
-    let blogsGroup = app.MapGroup("/v1/blogs")
+    let todosGroup = app.MapGroup("/v1/todos")
 
-    blogsGroup.MapGet("", Func<Task<GetBlogsHandlerResult>>(fun _ -> GetBlogsHandler.handler))
+    todosGroup.MapGet("", Func<Task<GetTodosHandlerResult>>(fun _ -> GetTodosHandler.handler))
     |> ignore
 
     app.Run()
