@@ -22,6 +22,10 @@ type DiscriminatedUnionConverter<'T>() =
         // カスタム書き込みロジックを実装します
         raise (NotImplementedException())
 
+type YourDiscriminatedUnionType =
+    | Case1 of string
+    | Case2 of int
+
 [<EntryPoint>]
 let main args =
     let builder = WebApplication.CreateBuilder(args)
