@@ -10,16 +10,25 @@ type TodoJson =
 
 type TodosJson = { todos: TodoJson list }
 
+module TodoTaskId =
+    let value (TodoTaskId id) = id
+
+module TodoTaskTitle =
+    let value (TodoTaskTitle title) = title
+
+module TodoTaskStatus =
+    let value (TodoTaskStatus status) = status
+
 
 type GetTodosHandlerResult =
     | Ok of TodosJson
     | Error of string
 
 module GetTodosHandler =
-    let private toResponseJson (todos: Todos) : TodosJson =
+    let private toResponseJson (Todos todos) : TodosJson =
         { todos =
             todos
-            |> List.map (fun (Todo(todo, user)) ->
+            |> List.map (fun (todo, user) ->
                 { id = todo.id |> TodoTaskId.value
                   title = todo.title |> TodoTaskTitle.value
                   check = todo.status |> TodoTaskStatus.value = "completed" }) }
