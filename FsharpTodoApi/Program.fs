@@ -9,17 +9,9 @@ open Microsoft.Extensions.DependencyInjection
 open System.Threading.Tasks
 open FsharpTodoApi.Handler
 
-open System.Text.Json
-open System.Text.Json.Serialization
-open System.Text.Json.FSharp
-
 [<EntryPoint>]
 let main args =
     let builder = WebApplication.CreateBuilder(args)
-
-    builder.Services.Configure<JsonOptions>(fun options ->
-        options.JsonSerializerOptions.Converters.Add(JsonFSharpConverter()))
-
 
     builder.Services.AddHttpLogging(fun logger -> logger.LoggingFields <- HttpLoggingFields.All)
     |> ignore
