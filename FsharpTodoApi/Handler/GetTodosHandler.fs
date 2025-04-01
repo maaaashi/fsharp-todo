@@ -2,6 +2,8 @@ namespace FsharpTodoApi.Handler
 
 open FsharpTodoApi.Domain
 open System.Threading.Tasks
+open System.Text.Json
+open FSharp.SystemTextJson
 
 type TodoJson =
     { id: string
