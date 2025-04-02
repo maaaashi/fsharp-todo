@@ -1,9 +1,8 @@
 namespace FsharpTodoApi.Handler
 
-open FsharpTodoApi.Domain
 open System.Threading.Tasks
-open System.Text.Json
-open FSharp.SystemTextJson
+open Microsoft.AspNetCore.Http
+open FsharpTodoApi.Domain
 
 type TodoJson =
     { id: string
@@ -11,8 +10,6 @@ type TodoJson =
       check: bool }
 
 type TodosJson = { todos: TodoJson list }
-
-type GetTodosHandlerResult = Ok of TodosJson
 
 module GetTodosHandler =
     let private toResponseJson (Todos todos) : TodosJson =
@@ -23,7 +20,7 @@ module GetTodosHandler =
                   title = "title"
                   check = true }) }
 
-    let handler: Task<GetTodosHandlerResult> =
+    let handler: Task<IResult> =
         async {
             let todo: TodoTask =
                 { id = TodoTaskId "blog_1"
@@ -34,6 +31,6 @@ module GetTodosHandler =
                 { id = UserId "user_1"
                   name = UserName "ユーザー1" }
 
-            return toResponseJson (Todos [ Todo(todo, user) ]) |> Ok
+            return toResponseJson (Todos [ Todo(todo, user) ]) |> Results.Ok
         }
         |> Async.StartAsTask

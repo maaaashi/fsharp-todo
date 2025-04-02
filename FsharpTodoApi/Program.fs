@@ -9,20 +9,12 @@ open Microsoft.Extensions.DependencyInjection
 open System.Threading.Tasks
 open FsharpTodoApi.Handler
 
-open System.Text.Json.Serialization
-
 [<EntryPoint>]
 let main args =
     let builder = WebApplication.CreateBuilder(args)
 
     builder.Services.AddHttpLogging(fun logger -> logger.LoggingFields <- HttpLoggingFields.All)
     |> ignore
-
-    let jsonOptions =
-        JsonFSharpOptions
-            .Default()
-            .WithUnionUnwrapFieldlessTags()
-            .ToJsonSerializerOptions()
 
     let app = builder.Build()
 
@@ -31,7 +23,7 @@ let main args =
 
     let todosGroup = app.MapGroup("/v1/todos")
 
-    todosGroup.MapGet("", Func<Task<GetTodosHandlerResult>>(fun _ -> GetTodosHandler.handler))
+    todosGroup.MapGet("", Func<Task<IResult>>(fun _ -> GetTodosHandler.handler))
     |> ignore
 
     app.Run()
