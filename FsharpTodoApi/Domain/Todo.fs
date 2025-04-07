@@ -3,4 +3,5 @@ namespace FsharpTodoApi.Domain
 open FSharpPlus
 open FSharpPlus.Lens
 
-let taskId = lens (fun (t: TodoTask) -> t.id) (fun v t -> { t with id = v })
+module TodoTaskId =
+    let inline _value f (TodoTaskId x) = f x <&> fun x -> TodoTaskId x
