@@ -5,16 +5,14 @@ type TodoTaskTitle = TodoTaskTitle of string
 type TodoTaskStatus = TodoTaskStatus of string
 
 type TodoTask =
-    { id: TodoTaskId
+    { tid: TodoTaskId
       title: TodoTaskTitle
       status: TodoTaskStatus }
 
 type UserId = UserId of string
 type UserName = UserName of string
 
-type User =
-    { id: UserId
-      name: UserName }
+type User = { uid: UserId; name: UserName }
 
 type Todo = TodoTask * User
 
