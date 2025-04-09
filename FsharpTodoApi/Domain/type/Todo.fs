@@ -1,19 +1,19 @@
 namespace FsharpTodoApi.Domain
 
-type TodoTaskId = TodoTaskId of string
-type TodoTaskTitle = TodoTaskTitle of string
-type TodoTaskStatus = TodoTaskStatus of string
+type TaskId = TodoTaskId of string
+type TaskTitle = TodoTaskTitle of string
+type TaskStatus = TodoTaskStatus of string
 
-type TodoTask =
-    { tid: TodoTaskId
-      title: TodoTaskTitle
-      status: TodoTaskStatus }
+type Task =
+    { Tid: TaskId
+      Title: TaskTitle
+      Status: TaskStatus }
 
 type UserId = UserId of string
 type UserName = UserName of string
 
-type User = { uid: UserId; name: UserName }
+type User = { Uid: UserId; Name: UserName }
 
-type Todo = TodoTask * User
+type Todo = { Task: Task; User: User }
 
 type Todos = Todos of Todo list

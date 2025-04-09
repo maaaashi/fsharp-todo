@@ -3,13 +3,13 @@ namespace FsharpTodoApi.Domain
 open FSharpPlus
 open FSharpPlus.Lens
 
-module TodoTaskId =
+module TaskId =
     let inline _value f (TodoTaskId x) = f x <&> TodoTaskId
 
-module TodoTaskTitle =
+module TaskTitle =
     let inline _value f (TodoTaskTitle x) = f x <&> TodoTaskTitle
 
-module TodoTaskStatus =
+module TaskStatus =
     let inline _value f (TodoTaskStatus x) = f x <&> TodoTaskStatus
 
 module UserId =
@@ -18,28 +18,28 @@ module UserId =
 module UserName =
     let inline _value f (UserName x) = f x <&> UserName
 
-module TodoTask =
+module Task =
     // let id_ = lens (fun t -> t.todoId) (fun v t -> { t with todoId = v })
-    let inline _id f b = f b.tid <&> fun a -> { b with tid = a }
+    let inline _Id f b = f b.Tid <&> fun a -> { b with Tid = a }
 
-    let inline _todoId b = _id << TodoTaskId._value <| b
+    let inline _TaskId b = _Id << TaskId._value <| b
 
-    let inline _title f b =
-        f b.title <&> fun a -> { b with title = a }
+    let inline _Title f b =
+        f b.Title <&> fun a -> { b with Title = a }
 
-    let inline _todoTitle b = _title << TodoTaskTitle._value <| b
+    let inline _TaskTitle b = _Title << TaskTitle._value <| b
 
-    let inline _status f b =
-        f b.status <&> fun a -> { b with status = a }
+    let inline _Status f b =
+        f b.Status <&> fun a -> { b with Status = a }
 
-    let inline _todoStatus b = _status << TodoTaskStatus._value <| b
+    let inline _TaskStatus b = _Status << TaskStatus._value <| b
 
 module User =
-    let inline _id f b = f b.uid <&> fun a -> { b with uid = a }
+    let inline _Id f b = f b.Uid <&> fun a -> { b with Uid = a }
 
-    let inline _userId b = _id << UserId._value <| b
+    let inline _UserId b = _Id << UserId._value <| b
 
-    let inline _name f b =
-        f b.name <&> fun a -> { b with name = a }
+    let inline _Name f b =
+        f b.Name <&> fun a -> { b with Name = a }
 
-    let inline _username b = _name << UserName._value <| b
+    let inline _username b = _Name << UserName._value <| b

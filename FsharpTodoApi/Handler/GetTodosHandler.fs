@@ -4,9 +4,7 @@ open System.Threading.Tasks
 open Microsoft.AspNetCore.Http
 open FsharpTodoApi.Domain
 
-type UserJson =
-    { id: string
-      name: string }
+type UserJson = { id: string; name: string }
 
 type TodoJson =
     { id: string
@@ -17,29 +15,30 @@ type TodoJson =
 type TodosJson = { todos: TodoJson list }
 
 module GetTodosHandler =
-    let private toResponseJson (Todos (todos: Todo list)) : TodosJson =
+    let private toResponseJson (Todos(todos: Todo list)) : TodosJson =
         { todos =
             todos
-            |> List.map (fun (todo, user) ->
-                { id = todo.id.ToString()
-                  title = todo.title.ToString()
-                  check = todo.status.Equals("done")
-                  user = {
-                    id = user.id.ToString()
-                    name = user.name.ToString()
-                  }}) }
+            |> List.map (fun (todo) ->
+                { id = todo.Task.Tid.ToString()
+                  title = todo.Task.Title.ToString()
+                  check = todo.Task.Status.Equals("done")
+                  user =
+                    { id = todo.User.Uid.ToString()
+                      name = todo.User.Name.ToString() } }) }
 
     let handler: Task<IResult> =
         async {
-            let todo: TodoTask =
-                { id = TodoTaskId "blog_1"
-                  title = TodoTaskTitle "タイトル1"
-                  status = TodoTaskStatus "done" }
+            let todoTask: Task =
+                { Tid = TodoTaskId "blog_1"
+                  Title = TodoTaskTitle "タイトル1"
+                  Status = TodoTaskStatus "done" }
 
             let user: User =
-                { id = UserId "user_1"
-                  name = UserName "ユーザー1" }
+                { Uid = UserId "user_1"
+                  Name = UserName "ユーザー1" }
 
-            return toResponseJson (Todos [ Todo(todo, user) ]) |> Results.Ok
+            let todo = { Task = todoTask; User = user }
+
+            return toResponseJson (Todos [ todo ]) |> Results.Ok
         }
         |> Async.StartAsTask
