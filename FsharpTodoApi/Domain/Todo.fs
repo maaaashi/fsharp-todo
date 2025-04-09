@@ -42,4 +42,4 @@ module User =
     let inline _Name f b =
         f b.Name <&> fun a -> { b with Name = a }
 
-    let inline _username b = _Name << UserName._value <| b
+    let inline _UserName b = _Name << UserName._value <| b

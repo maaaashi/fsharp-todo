@@ -3,13 +3,14 @@ namespace FsharpTodoApi.Handler
 open System.Threading.Tasks
 open Microsoft.AspNetCore.Http
 open FsharpTodoApi.Domain
+open FSharpPlus.Lens
 
 type UserJson = { id: string; name: string }
 
 type TodoJson =
     { id: string
       title: string
-      check: bool
+      check: string
       user: UserJson }
 
 type TodosJson = { todos: TodoJson list }
@@ -19,12 +20,12 @@ module GetTodosHandler =
         { todos =
             todos
             |> List.map (fun (todo) ->
-                { id = todo.Task.Tid.ToString()
-                  title = todo.Task.Title.ToString()
-                  check = todo.Task.Status.Equals("done")
+                { id = view Task._TaskId todo.Task
+                  title = view Task._TaskTitle todo.Task
+                  check = view Task._TaskStatus todo.Task
                   user =
-                    { id = todo.User.Uid.ToString()
-                      name = todo.User.Name.ToString() } }) }
+                    { id = view User._UserId todo.User
+                      name = view User._UserName todo.User } }) }
 
     let handler: Task<IResult> =
         async {
