@@ -3,6 +3,7 @@ namespace FsharpTodoApi.Handler
 open System.Threading.Tasks
 open Microsoft.AspNetCore.Http
 open FsharpTodoApi.Domain
+open FsharpTodoApi.Usecase
 open FSharpPlus.Lens
 
 type UserJson = { id: string; name: string }
@@ -29,17 +30,8 @@ module GetTodosHandler =
 
     let handler: Task<IResult> =
         async {
-            let todoTask: Task =
-                { Tid = TodoTaskId "blog_1"
-                  Title = TodoTaskTitle "タイトル1"
-                  Status = TodoTaskStatus "done" }
+            let! todos = GetTodos.execute ()
 
-            let user: User =
-                { Uid = UserId "user_1"
-                  Name = UserName "ユーザー1" }
-
-            let todo = { Task = todoTask; User = user }
-
-            return toResponseJson (Todos [ todo ]) |> Results.Ok
+            return toResponseJson todos |> Results.Ok
         }
         |> Async.StartAsTask
