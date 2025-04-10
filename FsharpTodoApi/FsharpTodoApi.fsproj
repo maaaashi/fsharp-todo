@@ -6,7 +6,6 @@
     <InvaliantGlobalization>true</InvaliantGlobalization>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Domain/type/Todo.fs" />
     <Compile Include="Domain/Todo.fs" />
     <Compile Include="Handler/*" />
     <Compile Include="Program.fs" />

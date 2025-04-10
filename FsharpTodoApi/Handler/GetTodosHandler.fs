@@ -10,7 +10,7 @@ type UserJson = { id: string; name: string }
 type TodoJson =
     { id: string
       title: string
-      check: string
+      status: string
       user: UserJson }
 
 type TodosJson = { todos: TodoJson list }
@@ -22,7 +22,7 @@ module GetTodosHandler =
             |> List.map (fun (todo) ->
                 { id = view Task._TaskId todo.Task
                   title = view Task._TaskTitle todo.Task
-                  check = view Task._TaskStatus todo.Task
+                  status = view Task._TaskStatus todo.Task
                   user =
                     { id = view User._UserId todo.User
                       name = view User._UserName todo.User } }) }
