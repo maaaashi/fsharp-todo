@@ -8,8 +8,8 @@
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
-  <ItemGroup><Compile Include="Usecase/GetTodosTest.fs" />
-    <Compile Include="Usecase/*.fs" />
+  <ItemGroup>
+    <Compile Include="Usecase/GetTodosTest.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
@@ -22,6 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="../FsharpTodoApi/FsharpTodoApi.fsproj" />
+    <ProjectReference Include="..\FsharpTodoApi\FsharpTodoApi.fsproj" />
   </ItemGroup>
 </Project>
