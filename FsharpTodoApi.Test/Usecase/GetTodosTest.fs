@@ -1,8 +1,8 @@
 namespace FsharpTodoApi.Usecase
 
-open FsharpTodoApi.Usecase
+open FsharpTodoApi.Usecase.GetTodos
+open FsharpTodoApi.Domain
 
-open System
 open FsUnit
 open NUnit.Framework
 
@@ -11,6 +11,19 @@ open NUnit.Framework
 module GetTodosTest =
   [<Test>]
   let ``Todoを取得する``() =
-    async {
-
-    }
+    let getTodos () = async {
+        return Todos [{
+          Task = {
+            Tid = TodoTaskId "1"
+            Title = TodoTaskTitle "Todo 1"
+            Status = TodoTaskStatus "Pending"
+          }
+          User = {
+            Uid = UserId "1"
+            Name = UserName "User 1"
+          }
+        }]
+      }
+    let deps = { getTodos = getTodos }
+    let actual = execute deps |> Async.RunSynchronously
+    actual |> should equal []
