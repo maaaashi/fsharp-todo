@@ -28,9 +28,10 @@ module GetTodosHandler =
                     { id = view User._UserId todo.User
                       name = view User._UserName todo.User } }) }
 
-    let handler: Task<IResult> =
+    let handler
+      (deps: GetTodos.Deps): Task<IResult> =
         async {
-            let! todos = GetTodos.execute ()
+            let! todos = GetTodos.execute deps
 
             return toResponseJson todos |> Results.Ok
         }

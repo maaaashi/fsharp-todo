@@ -8,6 +8,8 @@ open Microsoft.Extensions.DependencyInjection
 
 open System.Threading.Tasks
 open FsharpTodoApi.Handler
+open FsharpTodoApi.Domain
+open FsharpTodoApi.Usecase
 
 [<EntryPoint>]
 let main args =
@@ -23,7 +25,9 @@ let main args =
 
     let todosGroup = app.MapGroup("/v1/todos")
 
-    todosGroup.MapGet("", Func<Task<IResult>>(fun _ -> GetTodosHandler.handler))
+    let deps: GetTodos.Deps = { getTodos = fun () -> async { return Todos [] } }
+
+    todosGroup.MapGet("", Func<Task<IResult>>(fun _ -> GetTodosHandler.handler deps))
     |> ignore
 
     app.Run()
