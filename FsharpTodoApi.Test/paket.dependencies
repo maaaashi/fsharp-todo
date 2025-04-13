@@ -1,2 +1,7 @@
-FsUnit
-FSharp.SystemTextJson
+source https://api.nuget.org/v3/index.json
+
+storage: none
+
+nuget FsUnit
+nuget FSharp.SystemTextJson
+nuget FSharpPlus
