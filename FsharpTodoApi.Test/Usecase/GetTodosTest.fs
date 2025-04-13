@@ -9,21 +9,32 @@ open NUnit.Framework
 
 [<TestFixture>]
 module GetTodosTest =
-  [<Test>]
-  let ``Todoを取得する``() =
-    let getTodos () = async {
-        return Todos [{
-          Task = {
-            Tid = TodoTaskId "1"
-            Title = TodoTaskTitle "Todo 1"
-            Status = TodoTaskStatus "Pending"
-          }
-          User = {
-            Uid = UserId "1"
-            Name = UserName "User 1"
-          }
-        }]
-      }
-    let deps = { getTodos = getTodos }
-    let actual = execute deps |> Async.RunSynchronously
-    actual |> should equal []
+    [<Test>]
+    let ``Todoを取得する`` () =
+        let getTodos () =
+            async {
+                return
+                    Todos
+                        [ { Task =
+                              { Tid = TodoTaskId "1"
+                                Title = TodoTaskTitle "Todo 1"
+                                Status = TodoTaskStatus "Pending" }
+                            User =
+                              { Uid = UserId "1"
+                                Name = UserName "User 1" } } ]
+            }
+
+        let deps = { getTodos = getTodos }
+        let actual = execute deps |> Async.RunSynchronously
+
+        actual
+        |> should
+            equal
+            (Todos
+                [ { Task =
+                      { Tid = TodoTaskId "1"
+                        Title = TodoTaskTitle "Todo 1"
+                        Status = TodoTaskStatus "Pending" }
+                    User =
+                      { Uid = UserId "1"
+                        Name = UserName "User 1" } } ])
