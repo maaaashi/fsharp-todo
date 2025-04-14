@@ -9,12 +9,14 @@ open FSharpPlus
 module TodoGateway =
     let toTodo (todoJson: FakerApi.TodoJson) : Todo =
         { Task =
-            { Tid = TaskId todoJson.id
+            { Tid = TaskId (string todoJson.id)
               Title = TaskTitle todoJson.title
-              Status = TaskStatus todoJson.completed }
+              Status = TaskStatus (match todoJson.completed with
+                                   | true -> "completed"
+                                   | false -> "pending") }
           User =
-            { Uid = UserId todoJson.userId
-              Name = UserName "" } }
+            { Uid = UserId (string todoJson.userId)
+              Name = UserName (sprintf "User_%d" todoJson.userId) } }
 
     let getTodos (api: FakerApi) : GetTodos =
         fun () ->
