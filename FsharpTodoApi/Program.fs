@@ -8,7 +8,8 @@ open Microsoft.Extensions.DependencyInjection
 
 open System.Threading.Tasks
 open FsharpTodoApi.Handler
-open FsharpTodoApi.Domain
+open FsharpTodoApi.Driver
+open FsharpTodoApi.Gateway
 open FsharpTodoApi.Usecase
 
 [<EntryPoint>]
@@ -18,6 +19,10 @@ let main args =
     builder.Services.AddHttpLogging(fun logger -> logger.LoggingFields <- HttpLoggingFields.All)
     |> ignore
 
+    builder.Services.AddHttpClient<FakerApi>(fun client ->
+        client.BaseAddress <- Uri "https://jsonplaceholder.typicode.com")
+    |> ignore
+
     let app = builder.Build()
 
     app.MapGet("/v1/systems/ping", Func<IResult>(fun () -> Results.Ok("pong")))
@@ -25,9 +30,13 @@ let main args =
 
     let todosGroup = app.MapGroup("/v1/todos")
 
-    let deps: GetTodos.Deps = { getTodos = fun () -> async { return Todos [] } }
+    todosGroup.MapGet(
+        "",
+        Func<FakerApi, Task<IResult>>(fun fakerApi ->
+            let deps: GetTodos.Deps = { getTodos = TodoGateway.getTodos fakerApi }
 
-    todosGroup.MapGet("", Func<Task<IResult>>(fun _ -> GetTodosHandler.handler deps))
+            GetTodosHandler.handler deps)
+    )
     |> ignore
 
     app.Run()

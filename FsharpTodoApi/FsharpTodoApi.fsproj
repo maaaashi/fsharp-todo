@@ -7,8 +7,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Domain/Todo.fs" />
-    <Compile Include="Port/*" />
     <Compile Include="Driver/*" />
+    <Compile Include="Port/*" />
     <Compile Include="Gateway/*" />
     <Compile Include="Usecase/*" />
     <Compile Include="Handler/*" />
