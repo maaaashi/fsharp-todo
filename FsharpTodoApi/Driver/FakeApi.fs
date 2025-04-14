@@ -6,4 +6,11 @@ type FakerApi(httpClient: HttpClient) =
     member this.client() = httpClient
 
 module FakerApi =
-    let getTodos = fun (client: FakerApi) -> async { return [] }
+    type TodoJson =
+        { userId: string
+          id: string
+          title: string
+          completed: string }
+
+    type TodosJson = TodoJson list
+    let getTodos (client: FakerApi) : Async<TodosJson> = task { return [] } |> Async.AwaitTask

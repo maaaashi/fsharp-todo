@@ -3,9 +3,9 @@ namespace FsharpTodoApi.Domain
 open FSharpPlus
 open FSharpPlus.Lens
 
-type TaskId = TodoTaskId of string
-type TaskTitle = TodoTaskTitle of string
-type TaskStatus = TodoTaskStatus of string
+type TaskId = TaskId of string
+type TaskTitle = TaskTitle of string
+type TaskStatus = TaskStatus of string
 
 type Task =
     { Tid: TaskId
@@ -22,13 +22,13 @@ type Todo = { Task: Task; User: User }
 type Todos = Todos of Todo list
 
 module TaskId =
-    let inline _value f (TodoTaskId x) = f x <&> TodoTaskId
+    let inline _value f (TaskId x) = f x <&> TaskId
 
 module TaskTitle =
-    let inline _value f (TodoTaskTitle x) = f x <&> TodoTaskTitle
+    let inline _value f (TaskTitle x) = f x <&> TaskTitle
 
 module TaskStatus =
-    let inline _value f (TodoTaskStatus x) = f x <&> TodoTaskStatus
+    let inline _value f (TaskStatus x) = f x <&> TaskStatus
 
 module UserId =
     let inline _value f (UserId x) = f x <&> UserId

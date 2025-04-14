@@ -16,9 +16,9 @@ module GetTodosTest =
                 return
                     Todos
                         [ { Task =
-                              { Tid = TodoTaskId "1"
-                                Title = TodoTaskTitle "Todo 1"
-                                Status = TodoTaskStatus "Pending" }
+                              { Tid = TaskId "1"
+                                Title = TaskTitle "Todo 1"
+                                Status = TaskStatus "Pending" }
                             User =
                               { Uid = UserId "1"
                                 Name = UserName "User 1" } } ]
@@ -32,9 +32,9 @@ module GetTodosTest =
             equal
             (Todos
                 [ { Task =
-                      { Tid = TodoTaskId "1"
-                        Title = TodoTaskTitle "Todo 1"
-                        Status = TodoTaskStatus "Pending" }
+                      { Tid = TaskId "1"
+                        Title = TaskTitle "Todo 1"
+                        Status = TaskStatus "Pending" }
                     User =
                       { Uid = UserId "1"
                         Name = UserName "User 1" } } ])
